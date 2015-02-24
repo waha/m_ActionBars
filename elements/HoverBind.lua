@@ -256,7 +256,7 @@ m_ActionBars.MouseOverBind = function()
 		-- REGISTERING
 		local stance = StanceButton1:GetScript("OnClick")
 		local pet = PetActionButton1:GetScript("OnClick")
-		local button = SecureActionButton_OnClick
+		local button = ActionButton1:GetScript("OnClick")
 		local summon = MultiCastSummonSpellButton:GetScript("OnClick")
 		local recall = MultiCastRecallSpellButton:GetScript("OnClick")
 

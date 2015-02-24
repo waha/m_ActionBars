@@ -238,7 +238,7 @@ function tullaRange.UpdateButtonUsable(button)
 	local isUsable, notEnoughMana = IsUsableAction(action)
 	if isUsable then 	--usable
 		--but out of range
-		if IsActionInRange(action) == 0 then	--but out of range
+		if IsActionInRange(action) == false then	--but out of range
 			tullaRange.SetButtonColor(button, 'oor')
 --[[ 		--a holy power abilty, and we're less than 3 Holy Power
 		elseif PLAYER_IS_PALADIN and isHolyPowerAbility(action) and not(UnitPower('player', SPELL_POWER_HOLY_POWER) == 3 or UnitBuff('player', HAND_OF_LIGHT)) then

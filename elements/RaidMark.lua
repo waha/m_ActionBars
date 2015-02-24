@@ -87,21 +87,21 @@ if cfg.bars["WorldMarkerBar"].orientation == "HORIZONTAL" then
 	f_rpoint = "RIGHT"
 	f_offX = cfg.bars["WorldMarkerBar"].button_spacing+2
 	f_offY = 0
-	SetFlareButton(BlueFlare,"Blue",1,"LEFT",worldmarkbar,"LEFT",f_offX,f_offY,icontextable,0.25,0.5,0.25,0.5)
+	SetFlareButton(BlueFlare,"Blue",3,"LEFT",worldmarkbar,"LEFT",f_offX,f_offY,icontextable,0.25,0.5,0.25,0.5)
 	worldmarkbar:SetSize((cfg.bars["WorldMarkerBar"].button_size+cfg.bars["WorldMarkerBar"].button_spacing+2)*6,cfg.bars["WorldMarkerBar"].button_size)
 else
 	f_point = "TOP"
 	f_rpoint = "BOTTOM"
 	f_offX = 0
 	f_offY = -(cfg.bars["WorldMarkerBar"].button_spacing+2)
-	SetFlareButton(BlueFlare,"Blue",1,"TOP",worldmarkbar,"TOP",f_offX,f_offY,icontextable,0.25,0.5,0.25,0.5)
+	SetFlareButton(BlueFlare,"Blue",3,"TOP",worldmarkbar,"TOP",f_offX,f_offY,icontextable,0.25,0.5,0.25,0.5)
 	worldmarkbar:SetSize(cfg.bars["WorldMarkerBar"].button_size,(cfg.bars["WorldMarkerBar"].button_size+cfg.bars["WorldMarkerBar"].button_spacing+2)*6)
 end
-SetFlareButton(GreenFlare,"Green",2,f_point,BlueFlare,f_rpoint,f_offX,f_offY,icontextable,0.75,1,0,0.25)
-SetFlareButton(PurpleFlare,"Purple",3,f_point,GreenFlare,f_rpoint,f_offX,f_offY,icontextable,0.5,0.75,0,0.25)
-SetFlareButton(RedFlare,"Red",4,f_point,PurpleFlare,f_rpoint,f_offX,f_offY,icontextable,0.5,0.75,0.25,0.5)
-SetFlareButton(WhiteFlare,"White",5,f_point,RedFlare,f_rpoint,f_offX,f_offY,icontextable,0,0.25,0,0.25)
-SetFlareButton(ClearFlare,"Clear",6,f_point,WhiteFlare,f_rpoint,f_offX,f_offY,"interface\\glues\\loadingscreens\\dynamicelements",0,0.5,0,0.5)
+SetFlareButton(GreenFlare,"Green",5,f_point,BlueFlare,f_rpoint,f_offX,f_offY,icontextable,0.75,1,0,0.25)
+SetFlareButton(PurpleFlare,"Purple",6,f_point,GreenFlare,f_rpoint,f_offX,f_offY,icontextable,0.5,0.75,0,0.25)
+SetFlareButton(RedFlare,"Red",2,f_point,PurpleFlare,f_rpoint,f_offX,f_offY,icontextable,0.5,0.75,0.25,0.5)
+SetFlareButton(WhiteFlare,"White",8,f_point,RedFlare,f_rpoint,f_offX,f_offY,icontextable,0,0.25,0,0.25)
+SetFlareButton(ClearFlare,"Clear",9,f_point,WhiteFlare,f_rpoint,f_offX,f_offY,"interface\\glues\\loadingscreens\\dynamicelements",0,0.5,0,0.5)
 
 -- Mouseover alpha for raid mark/flare bars
 local SetRaidMarksAlpha = function(bar,buttons,switch,baralpha,fadealpha,disable)
@@ -132,7 +132,7 @@ local SetRaidMarksAlpha = function(bar,buttons,switch,baralpha,fadealpha,disable
 	bar:SetAlpha(baralpha)
 end
 local RaidIconButtons = {SkullIcon,CrossIcon,SquareIcon,MoonIcon,TriangleIcon,DiamondIcon,CircleIcon,StarIcon,ClearIcon} 
-local WorldMarkButtons = {BlueFlare,GreenFlare,PurpleFlare,RedFlare,WhiteFlare,ClearFlare} 
+local WorldMarkButtons = {WhiteFlare,RedFlare,BlueFlare,MoonFlare,GreenFlare,PurpleFlare,ClearFlare} 
 SetRaidMarksAlpha(raidmarkbar,RaidIconButtons,cfg.bars["RaidIconBar"].show_on_mouseover,cfg.bars["RaidIconBar"].bar_alpha,cfg.bars["RaidIconBar"].fadeout_alpha)
 SetRaidMarksAlpha(worldmarkbar,WorldMarkButtons,cfg.bars["WorldMarkerBar"].show_on_mouseover,cfg.bars["WorldMarkerBar"].bar_alpha,cfg.bars["WorldMarkerBar"].fadeout_alpha,true)
 

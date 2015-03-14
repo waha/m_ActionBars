@@ -144,6 +144,7 @@ RaidIconBar_holder:RegisterEvent("GROUP_ROSTER_UPDATE")
 --RaidIconBar_holder:RegisterEvent("PARTY_MEMBERS_CHANGED")
 RaidIconBar_holder:Show()
 RaidIconBar_holder:SetScript("OnEvent", function(self, event, ...)
+	if InCombatLockdown() then return end
 	if cfg.bars["RaidIconBar"].hide then self:Hide() return end
 	if cfg.bars["RaidIconBar"].in_group_only and not IsInGroup() then self:Hide() return end
 	if IsInRaid() and not (UnitIsGroupAssistant("player") or UnitIsGroupLeader("player")) then self:Hide() return end
@@ -160,6 +161,7 @@ WorldMarkerBar_holder:RegisterEvent("GROUP_ROSTER_UPDATE")
 WorldMarkerBar_holder:RegisterEvent("PARTY_LEADER_CHANGED")
 WorldMarkerBar_holder:Show()
 WorldMarkerBar_holder:SetScript("OnEvent", function(self, event, ...)
+	if InCombatLockdown() then return end
 	if cfg.bars["WorldMarkerBar"].hide then self:Hide() return	end
 	if not IsInGroup() then self:Hide() return end
 	if cfg.bars["WorldMarkerBar"].disable_in_combat and event == "PLAYER_REGEN_DISABLED" then self:Hide() return end

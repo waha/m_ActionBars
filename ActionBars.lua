@@ -201,7 +201,7 @@ local FramesToHide = {
     CharacterBag1Slot,
     CharacterBag2Slot,
     CharacterBag3Slot,
-	
+	MainMenuBarArtFrameBackground,
 	StanceBarLeft,
 	StanceBarMiddle,
 	StanceBarRight,
@@ -226,6 +226,9 @@ for _, f in pairs(FramesToHide) do
 	  f:SetParent(frameHider)
     end
 end
+MainMenuBarArtFrame.LeftEndCap:Hide();
+MainMenuBarArtFrame.RightEndCap:Hide();
+MainMenuBarArtFrame.PageNumber:SetAlpha(0);
 local OverrideTexList =  {
 	"_BG",
 	"_MicroBGMid",

@@ -41,7 +41,7 @@ local function SetTextures(self, checked)
 end
 
 local function CreateBG(bu)
-	bu.bg = CreateFrame("Frame", nil, bu)
+	bu.bg = CreateFrame("Frame", nil, bu, "BackdropTemplate")
 	bu.bg:SetAllPoints(bu)
 	bu.bg:SetPoint("TOPLEFT", bu, "TOPLEFT", -1, 1)
 	bu.bg:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 1, -1)
@@ -270,19 +270,44 @@ end
 ---------------------------------------------------
 -- Hooks
 ---------------------------------------------------
-hooksecurefunc("ActionButton_Update", ActionButtons)
-if not IsAddOnLoaded("Dominos") then hooksecurefunc("ActionButton_UpdateHotkeys", updatehotkey) end
---hooksecurefunc("ActionButton_Update", VehicleButtons)
+local ActionBarActionButtonMixinHook_OnLoad = function(self)
+	ActionButtons_fixgrid(self)
+	updatehotkey(self)
+
+	hooksecurefunc(self, "ShowGrid", ActionButtons_fixgrid)
+	hooksecurefunc(self, "Update", ActionButtons)
+	hooksecurefunc(self, "UpdateHotkeys", updatehotkey)
+end
+
+-- Force Hotkey Update
+local f = CreateFrame("Frame", nil)
+f:RegisterEvent("PLAYER_LOGIN")
+
+f:SetScript("OnEvent", function(self, event, ...)
+		if event == "PLAYER_LOGIN" then
+
+        f:UnregisterEvent("PLAYER_LOGIN")
+
+        -- Hook existing frames.
+        local ActionBarActionButtonMixin_OnLoad = ActionBarActionButtonMixin.OnLoad
+        local frame = EnumerateFrames()
+        while frame do
+            if frame.OnLoad == ActionBarActionButtonMixin_OnLoad then
+                ActionBarActionButtonMixinHook_OnLoad(frame)
+            end
+
+            frame = EnumerateFrames(frame)
+        end
+    end
+end)
+
 hooksecurefunc("PetActionBar_Update", PetActionButtons)
 
 hooksecurefunc("PossessBar_Update", PossessButtons)
 hooksecurefunc("StanceBar_UpdateState", StanceButtons)
 
-hooksecurefunc("ActionButton_ShowGrid", ActionButtons_fixgrid)
---hooksecurefunc("ActionButton_OnEvent", ActionButtons_fixgrid)
-
 SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
-hooksecurefunc("ActionButton_UpdateFlyout", FlyoutButtons)
+--hooksecurefunc("ActionButton_UpdateFlyout", FlyoutButtons)
 
 --[[ if not cfg.config_totembar[4] and select(2, UnitClass("player"))=="SHAMAN" and MultiCastActionBarFrame then
 	hooksecurefunc("MultiCastSlotButton_Update", MultiCastSlotButtons)

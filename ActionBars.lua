@@ -58,32 +58,44 @@ f:SetScript("OnEvent", function()
 		local btn = _G[format("ActionButton%d", i)]
 		btn:SetAttribute("showgrid", 1)
 		btn:SetAttribute("statehidden", nil)
-		ActionButton_ShowGrid(btn)
+--		btn.NormalTexture = nil
+		btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_CVAR);
+--		ActionButton_ShowGrid(btn)
 		
 		btn = _G[format("MultiBarRightButton%d", i)]
 		btn:SetAttribute("showgrid", 1)
 		btn:SetAttribute("statehidden", nil)
-		ActionButton_ShowGrid(btn)
+--		btn.NormalTexture = nil
+		btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_CVAR);
+--		ActionButton_ShowGrid(btn)
 
 		btn = _G[format("MultiBarBottomRightButton%d", i)]
 		btn:SetAttribute("showgrid", 1)
 		btn:SetAttribute("statehidden", nil)
-		ActionButton_ShowGrid(btn)
+--		btn.NormalTexture = nil
+		btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_CVAR);
+--		ActionButton_ShowGrid(btn)
 		
 		btn = _G[format("MultiBarLeftButton%d", i)]
 		btn:SetAttribute("showgrid", 1)
 		btn:SetAttribute("statehidden", nil)
-		ActionButton_ShowGrid(btn)
+--		btn.NormalTexture = nil
+		btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_CVAR);
+--		ActionButton_ShowGrid(btn)
 		
 		btn = _G[format("MultiBarBottomLeftButton%d", i)]
 		btn:SetAttribute("showgrid", 1)
 		btn:SetAttribute("statehidden", nil)
-		ActionButton_ShowGrid(btn)
+--		btn.NormalTexture = nil
+		btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_CVAR);
+--		ActionButton_ShowGrid(btn)
 		
 		btn = _G[format("ExtraBarButton%d", i)]
 		btn:SetAttribute("showgrid", 1)
 		btn:SetAttribute("statehidden", nil)
-		ActionButton_ShowGrid(btn)
+--		btn.NormalTexture = nil
+		btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_CVAR);
+--		ActionButton_ShowGrid(btn)
 	end
 		--SHOW_MULTI_ACTIONBAR_1 = 1
 		--SHOW_MULTI_ACTIONBAR_2 = 1
@@ -92,7 +104,7 @@ f:SetScript("OnEvent", function()
 		--InterfaceOptions_UpdateMultiActionBars()
 		--MultiActionBar_Update()
 end) 
-
+--Mixin(f, ActionBarActionButtonMixin)
 ---- Modifying default action bars
 -- Creating holder frames for each bar
 local mainbar = mAB.CreateHolder("Bar1_holder", cfg.bars["Bar1"].position)
@@ -250,6 +262,7 @@ for _, t in pairs(OverrideTexList) do
 end
 
 
+
 -- ExtraBar button implementation
 extrabtn = CreateFrame("Frame", "ExtraBtn_holder", UIParent)
 if not cfg.bars["ExtraButton"].disable then
@@ -260,7 +273,15 @@ if not cfg.bars["ExtraButton"].disable then
 	ExtraActionBarFrame:ClearAllPoints()
 	ExtraActionBarFrame:SetPoint("CENTER", extrabtn, "CENTER", 0, 0)
 
-	--ExtraActionButton1.noResize = true
+	ExtraAbilityContainer.ignoreFramePositionManager = true
+	ExtraAbilityContainer:SetParent(extrabtn)
+	ExtraAbilityContainer:ClearAllPoints()
+	ExtraAbilityContainer:SetPoint("CENTER", extrabtn, "CENTER", 0, 0)
+-- Make sure the artwork doesn't interfere with the actionbars
+	ExtraActionBarFrame:SetHitRectInsets(30,30,30,40)
+
+-- Hide the artwork around the extra button
+	ExtraActionButton1.style:Hide()
 	ExtraActionBarFrame.ignoreFramePositionManager = true
 end
 
@@ -421,6 +442,7 @@ m_ActionBars_Toggle_Extra_Bars = function()
 	end
 end
 
+
 -- and making slash command to show them
 SlashCmdList["EXTRA"] = function() m_ActionBars_Toggle_Extra_Bars() end
 SLASH_EXTRA1 = "/extra"
@@ -437,7 +459,7 @@ m_ActionBars_Toggle_Test_Mode = function()
 		insets = {left = 0, right = 0, top = 0, bottom = 0,},}
 	local ShowHolder = function(holder, switch)
 		if not _G[holder:GetName().."_overlay"] then
-			local f = CreateFrame("Frame", holder:GetName().."_overlay")
+			local f = CreateFrame("Frame", holder:GetName().."_overlay", UIParent, "BackdropTemplate")
 			f:SetAllPoints(holder)
 			f:SetBackdrop(backdrop_tab);
 			f:SetBackdropColor(.1,.1,.2,.8)

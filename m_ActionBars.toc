@@ -1,8 +1,8 @@
 ## Interface: 90001
-## Title: mono|cffffffffActionBars|r
+## Title: mono|cffffffffActionBars|r (fan update)
 ## Author: Monolit
 ## Notes: Action bar styling
-## Version: 5.1.3c
+## Version: 5.1.3d
 ## Credits: Zork, Allez, Iceblink, Tuller, Tukz, Nightcracker
 ## OptionalDeps: !mCFG
 cfg.lua

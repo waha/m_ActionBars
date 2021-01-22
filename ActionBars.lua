@@ -235,7 +235,8 @@ for _, f in pairs(FramesToHide) do
       --f:UnregisterAllEvents()
 	  f:SetTexture(nil)
 	else
-	  f:SetParent(frameHider)
+		f:Hide()
+		f:SetParent(frameHider)
     end
 end
 MainMenuBarArtFrame.LeftEndCap:Hide();
@@ -260,8 +261,6 @@ local OverrideTexList =  {
 for _, t in pairs(OverrideTexList) do
 	OverrideActionBar[t]:SetAlpha(0)
 end
-
-
 
 -- ExtraBar button implementation
 extrabtn = CreateFrame("Frame", "ExtraBtn_holder", UIParent)
@@ -316,7 +315,8 @@ veb:SetVertexColor(0,0,0)
 ve:Hide()
 if not cfg.bars["ExitVehicleButton"].disable then
 	ve:Show()
-	RegisterStateDriver(ve, "visibility", "[vehicleui] show;hide")
+	RegisterStateDriver(ve, "visibility", "[vehicleui] show;[possessbar,@vehicle,exists] show;hide")
+
 	ve:RegisterEvent("UNIT_ENTERING_VEHICLE")
 	ve:RegisterEvent("UNIT_ENTERED_VEHICLE")
 	ve:RegisterEvent("UNIT_EXITING_VEHICLE")
@@ -359,6 +359,16 @@ local SetMicroButtons = function()
     CharacterMicroButton:SetPoint("BOTTOMLEFT", 0, 0)
 end
 SetMicroButtons()
+
+-- Make sure our micro menu doesn't get reset when the override bar is enabled
+hooksecurefunc('OverrideActionBar_UpdateMicroButtons', function()
+    for _, b in pairs(MicroButtons) do
+		b:SetParent(MicroMenu)
+    end
+    CharacterMicroButton:ClearAllPoints();
+    CharacterMicroButton:SetPoint("BOTTOMLEFT", 0, 0)
+end)
+
 -- gotta run this function each time we respec so we don't loose our micromenu bar
 -- seems to be fixed in WoW5.0
 --[[ MicroMenu:RegisterEvent("PLAYER_TALENT_UPDATE")
